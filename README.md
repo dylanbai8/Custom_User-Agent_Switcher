@@ -1,0 +1,2 @@
+# Custom_User-Agent_Switcher
+Chrome浏览器扩展 用于根据url域名关键词自动匹配切换User-Agent
