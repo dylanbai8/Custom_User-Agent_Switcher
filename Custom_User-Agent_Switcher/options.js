@@ -19,6 +19,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // 保存规则到存储
   saveButton.addEventListener("click", function() {
+    saveRules();
+  });
+
+  // 保存规则到存储的函数
+  function saveRules() {
     let rules = [];
     let ruleElements = document.querySelectorAll(".rule");
     for (let ruleElement of ruleElements) {
@@ -31,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
     chrome.storage.sync.set({rules}, function() {
       alert("规则已保存！");
     });
-  });
+  }
 
   // 在UI中添加一个规则元素的函数
   function addRule(domain, userAgent) {
@@ -46,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
     `;
     ruleElement.querySelector(".removeRule").addEventListener("click", function() {
       ruleElement.remove();
+      saveRules(); // 在移除规则后保存
     });
     rulesContainer.appendChild(ruleElement);
   }
