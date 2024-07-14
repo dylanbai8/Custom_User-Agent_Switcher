@@ -51,8 +51,27 @@ document.addEventListener("DOMContentLoaded", function() {
     `;
     ruleElement.querySelector(".removeRule").addEventListener("click", function() {
       ruleElement.remove();
+      removeCache();
       saveRules(); // 在移除规则后保存
     });
     rulesContainer.appendChild(ruleElement);
   }
+
+  // 修正移除错误
+  function removeCache() {
+    var element = document.getElementById('removeCache');
+    if (element) {element.parentNode.removeChild(element);}
+    let ruleElement = document.createElement("div");
+    ruleElement.style.display = 'none';
+    ruleElement.id = "removeCache";
+    ruleElement.className = "removeCache";
+    ruleElement.innerHTML = `
+      <label>域名关键词:</label>
+      <input type="text" class="domain" value="removeCache">
+      <label>User-Agent:</label>
+      <input type="text" class="userAgent" value="removeCache">
+    `;
+    rulesContainer.appendChild(ruleElement);
+  }
+
 });
