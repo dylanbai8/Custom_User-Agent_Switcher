@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Custom User-Agent Switcher",
+  "name": "User-Agent自动切换",
   "version": "1.0",
   "permissions": [
     "notifications",
