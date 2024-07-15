@@ -3,6 +3,7 @@
   "name": "Custom User-Agent Switcher",
   "version": "1.0",
   "permissions": [
+    "notifications",
     "storage",
     "declarativeNetRequest"
   ],

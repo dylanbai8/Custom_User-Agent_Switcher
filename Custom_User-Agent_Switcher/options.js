@@ -26,15 +26,21 @@ document.addEventListener("DOMContentLoaded", function() {
   function saveRules() {
     let rules = [];
     let ruleElements = document.querySelectorAll(".rule");
+    let domainSet = new Set(); // 使用Set来检查domain是否重复
     for (let ruleElement of ruleElements) {
       let domain = ruleElement.querySelector(".domain").value;
       let userAgent = ruleElement.querySelector(".userAgent").value;
       if (domain && userAgent) {
+        if (domainSet.has(domain)) {
+          chrome.notifications.create({type: 'basic',iconUrl: 'icon.png',title: 'Error !',message: '错误：重复添加 存在相同域名或关键词 !'});
+          return; // 阻止保存操作
+        }
+        domainSet.add(domain);
         rules.push({domain, userAgent});
       }
     }
     chrome.storage.sync.set({rules}, function() {
-      alert("规则已保存！");
+      // chrome.notifications.create({type: 'basic',iconUrl: 'icon.png',title: 'Success !',message: '成功：规则已储存 !'});
     });
   }
 
@@ -51,26 +57,8 @@ document.addEventListener("DOMContentLoaded", function() {
     `;
     ruleElement.querySelector(".removeRule").addEventListener("click", function() {
       ruleElement.remove();
-      removeCache();
       saveRules(); // 在移除规则后保存
     });
-    rulesContainer.appendChild(ruleElement);
-  }
-
-  // 修正移除错误
-  function removeCache() {
-    var element = document.getElementById('removeCache');
-    if (element) {element.parentNode.removeChild(element);}
-    let ruleElement = document.createElement("div");
-    ruleElement.style.display = 'none';
-    ruleElement.id = "removeCache";
-    ruleElement.className = "removeCache";
-    ruleElement.innerHTML = `
-      <label>域名关键词:</label>
-      <input type="text" class="domain" value="removeCache">
-      <label>User-Agent:</label>
-      <input type="text" class="userAgent" value="removeCache">
-    `;
     rulesContainer.appendChild(ruleElement);
   }
 
