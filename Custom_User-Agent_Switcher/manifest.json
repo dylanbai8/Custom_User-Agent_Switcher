@@ -2,6 +2,7 @@
   "manifest_version": 3,
   "name": "User-Agent自动切换",
   "version": "1.0",
+  "description": "根据域名或者url关键词自动切换User-Agent",
   "permissions": [
     "notifications",
     "storage",
